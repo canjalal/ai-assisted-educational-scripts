@@ -79,7 +79,31 @@ def generate_task():
             "task": "Replace every line with 'LINE'",
             "solution": "s/.*/LINE/",
             "guide": "Use 's/.*/new/' to replace the entire content of each line with 'new'."
-        }
+        },
+        {
+            "input": "apple banana apple banana apple",
+            "task": "Replace the second occurrence of 'apple' with 'grape'",
+            "solution": "s/apple/grape/2",
+            "guide": "Use 's/old/new/n' to replace only the nth occurrence of 'old'."
+        },
+        {
+            "input": "line1\nline2",
+            "task": "Replace 'line1\nline2' with 'combined'",
+            "solution": "N;s/line1\\nline2/combined/",
+            "guide": "Use 'N;' before 's/old/new/' to append the next line to the pattern space and apply substitutions across lines."
+        },
+        {
+            "input": "line1\nline2\nskip\nline3",
+            "task": "Delete lines containing 'skip'",
+            "solution": "/skip/d",
+            "guide": "Use '/pattern/d' to delete lines that match the pattern."
+        },
+        {
+            "input": "line1\n\nline2",
+            "task": "Replace empty lines with 'EMPTY'",
+            "solution": "/^$/s/^$/EMPTY/",
+            "guide": "Use '^$' to match empty lines."
+        },
     ]
     return tasks
 
@@ -113,7 +137,7 @@ def main():
                 return
             if user_command.lower() == 'skip':
                 if isinstance(task['solution'], list):
-                    print(f"The correct commands were: {', or '.join([f'sed \"{sol}\"' for sol in task['solution']])}")
+                    print(f"The correct commands were: {', '.join([f'sed \"{sol}\"' for sol in task['solution']])}")
                 else:
                     print(f"The correct command was: sed '{task['solution']}'")
                 break
